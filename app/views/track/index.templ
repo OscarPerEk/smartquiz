@@ -6,11 +6,19 @@ import (
 )
 
 templ Index(germanWords []types.GermanWord) {
-	@layouts.App() {
+	@layouts.BaseLayout() {
 		<div class="text-center flex flex-col justify-center items-center mt-5 lg:mt-16">
 			<div class="flex flex-col gap-12">
-				<h1 class="inline-block text-transparent bg-clip-text max-w-2xl mx-auto text-5xl lg:text-7xl font-bold uppercase bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">track</h1>
+				<h1 class="inline-block text-transparent bg-clip-text max-w-2xl mx-auto text-5xl lg:text-7xl font-bold uppercase bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500"> track </h1>
 			</div>
+		<div class="flex flex-col gap-1">
+			<ul class="list-disc ml-4">
+				for _, germanWord := range germanWords {
+					<li class="text-red-500 text-xs">{ germanWord.GermanWord }</li>
+				}
+			</ul>
 		</div>
+		</div>
+		<h1>{ germanWords[0].GermanWord }</h1>
 	}
 }

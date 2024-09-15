@@ -13,8 +13,8 @@ import (
 
 func HandleTrackIndex(kit *kit.Kit) error {
 	var germanWords []types.GermanWord
-	var germanWord types.GermanWord
-	err := db.Get().Find(&germanWord).Error
+	// var germanWord types.GermanWord
+	err := db.Get().Find(&germanWords).Error
 	if err != nil {
 		fmt.Println("Unable to query glossary from database", err)
 		http.Error(kit.Response, "Unable to query glossary from database", http.StatusInternalServerError)
@@ -24,7 +24,8 @@ func HandleTrackIndex(kit *kit.Kit) error {
 			Definition:      "c",
 		})
 	} else {
-		germanWords = append(germanWords, germanWord)
+		fmt.Println("words: ", germanWords)
+		// germanWords = append(germanWords, germanWord)
 	}
 
 	// Render the template with the fetched data
