@@ -1,15 +1,14 @@
 package app
 
 import (
+	"log/slog"
 	"smartquiz/app/handlers"
 	"smartquiz/app/views/errors"
 	"smartquiz/plugins/auth"
-	"log/slog"
 
 	"github.com/anthdm/superkit/kit"
 	"github.com/anthdm/superkit/kit/middleware"
 	"github.com/go-chi/chi/v5"
-
 	chimiddleware "github.com/go-chi/chi/v5/middleware"
 )
 
@@ -54,7 +53,8 @@ func InitializeRoutes(router *chi.Mux) {
 		app.Use(kit.WithAuthentication(authConfig, true)) // strict set to true
 
 		// Routes
-		// app.Get("/path", kit.Handler(myHandler.HandleIndex))
+		app.Get("/track", kit.Handler(handlers.HandleTrackIndex))
+		app.Get("/quiz", kit.Handler(handlers.HandleQuizIndex))
 	})
 }
 
