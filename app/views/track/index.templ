@@ -8,30 +8,50 @@ import (
 templ Index(germanWords []types.GermanWord) {
 	@layouts.App() {
 		<div class="text-center flex flex-col justify-center items-center mt-5 lg:mt-16">
-			<div class="flex flex-col gap-12">
-				<h1 class="inline-block text-transparent bg-clip-text max-w-2xl mx-auto text-5xl lg:text-7xl font-bold uppercase bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500"> track </h1>
-			</div>
-		</div>
-		<div class="overflow-x-auto flex justify-center mt-10 lg:mt-15">
-		  <table class="table-auto">
-			<!-- head -->
-			<thead>
-			    <tr>
-				<th class="text-left py-4">Difficulty</th>
-				<th class="text-left py-4">German Word</th>
-				<th class="text-left py-4">Definition</th>
-			    </tr>
-			</thead>
-			<tbody>
 			for _, germanWord := range germanWords {
-			    <tr>
-				<td class="text-left py-4">{ germanWord.DifficultyLevel }</td>
-				<td class="text-left py-4">{ germanWord.GermanWord }</td>
-				<td class="text-left py-4">{ germanWord.Definition }</td>
-			    </tr>
-			}
-			</tbody>
-		  </table>
+			<article
+			  class="w-full sm:w-1 lg:w-1/2 rounded-lg border border-gray-100 bg-white p-4 shadow-sm transition hover:shadow-lg sm:p-6 dark:border-gray-800 dark:bg-gray-900 dark:shadow-gray-700/25"
+			>
+			  <span class="inline-block rounded bg-blue-600 p-2 text-white dark:bg-blue-700">
+			    <svg
+			      xmlns="http://www.w3.org/2000/svg"
+			      class="size-6"
+			      fill="none"
+			      viewBox="0 0 24 24"
+			      stroke="currentColor"
+			    >
+			      <path d="M12 14l9-5-9-5-9 5 9 5z" />
+			      <path
+				d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"
+			      />
+			      <path
+				stroke-linecap="round"
+				stroke-linejoin="round"
+				stroke-width="2"
+				d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"
+			      />
+			    </svg>
+			  </span>
+
+			  <a href="#">
+			    <h3 class="mt-0.5 text-lg font-medium text-gray-900 dark:text-white">
+			      { germanWord.DifficultyLevel }: { germanWord.GermanWord }
+			    </h3>
+			  </a>
+
+			  <p class="mt-2 line-clamp-3 text-sm/relaxed text-gray-500 dark:text-gray-400">
+				{ germanWord.Definition }
+			  </p>
+
+			  <a href="#" class="group mt-4 inline-flex items-center gap-1 text-sm font-medium text-blue-600">
+			    Find out more
+
+			    <span aria-hidden="true" class="block transition-all group-hover:ms-0.5 rtl:rotate-180">
+			      &rarr;
+			    </span>
+			  </a>
+			</article>
+				}
 		</div>
 	}
 }

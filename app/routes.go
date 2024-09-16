@@ -42,6 +42,9 @@ func InitializeRoutes(router *chi.Mux) {
 
 		// Routes
 		app.Get("/", kit.Handler(handlers.HandleLandingIndex))
+		app.Get("/track", kit.Handler(handlers.HandleTrackIndex))
+		app.Get("/quiz", kit.Handler(handlers.HandleQuizIndex))
+		app.Post("/upload", kit.Handler(handlers.HandleUpload))
 	})
 
 	// Authenticated routes
@@ -53,8 +56,6 @@ func InitializeRoutes(router *chi.Mux) {
 		app.Use(kit.WithAuthentication(authConfig, true)) // strict set to true
 
 		// Routes
-		app.Get("/track", kit.Handler(handlers.HandleTrackIndex))
-		app.Get("/quiz", kit.Handler(handlers.HandleQuizIndex))
 	})
 }
 

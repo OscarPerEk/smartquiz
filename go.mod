@@ -8,12 +8,14 @@ go 1.22.4
 require (
 	github.com/a-h/templ v0.2.778
 	github.com/anthdm/superkit v0.0.0-20240701091803-e7f8e0aad3e9
+	github.com/dslipak/pdf v0.0.2
 	github.com/go-chi/chi/v5 v5.0.14
+	github.com/go-resty/resty/v2 v2.15.0
 	github.com/golang-jwt/jwt/v5 v5.2.1
 	github.com/google/uuid v1.6.0
 	github.com/joho/godotenv v1.5.1
 	github.com/mattn/go-sqlite3 v1.14.22
-	golang.org/x/crypto v0.24.0
+	golang.org/x/crypto v0.27.0
 	gorm.io/driver/sqlite v1.5.6
 	gorm.io/gorm v1.25.10
 )
@@ -23,4 +25,5 @@ require (
 	github.com/gorilla/sessions v1.3.0 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/jinzhu/now v1.1.5 // indirect
+	golang.org/x/net v0.28.0 // indirect
 )

@@ -9,12 +9,19 @@ templ Navigation() {
 			<div class="text-lg text-foreground">
 				<a href="/track" class="font-semibold uppercase text-blue-500">track</a>
 			</div>
-			<form method="post" action="/upload" enctype="multipart/form-data" hx-post="/upload" hx-enc="multipart/form-data">
-			    <label for="file-upload" class="font-semibold uppercase">
-				<span role="button">upload</span>
-			    </label>
-			    <input id="file-upload" type="file" name="picture" class="hidden" onchange="this.form.submit()" accept="image/*">
-			</form>
+			<form id='form' hx-encoding='multipart/form-data' hx-post='/upload'>
+				<input type='file' name='file'>
+				<button>
+				    Upload
+				</button>
+				<progress id='progress' value='0' max='100'></progress>
+			    </form>
+			    <script>
+				htmx.on('#form', 'htmx:xhr:progress', function(evt) {
+				  htmx.find('#progress').setAttribute('value', evt.detail.loaded/evt.detail.total * 100)
+				});
+			    </script>
+
 			<div class="text-lg text-foreground">
 				<a href="/quiz" class="font-semibold uppercase text-blue-500">quiz</a>
 			</div>
