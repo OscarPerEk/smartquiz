@@ -7,10 +7,10 @@ import (
 
 templ Index(germanWords []types.GermanWord) {
 	@layouts.App() {
-		<div class="text-center flex flex-col justify-center items-center mt-5 lg:mt-16">
+		<div class="text-center flex flex-col justify-center items-center mt-5 lg:mt-16 space-y-6">
 			for _, germanWord := range germanWords {
 			<article
-			  class="w-full sm:w-1 lg:w-1/2 rounded-lg border border-gray-100 bg-white p-4 shadow-sm transition hover:shadow-lg sm:p-6 dark:border-gray-800 dark:bg-gray-900 dark:shadow-gray-700/25"
+			  class="w-full sm:w-1 lg:w-1/2 rounded-lg border border-gray-200 bg-gray-100 p-4 shadow-sm transition hover:shadow-lg sm:p-6 dark:border-gray-700 dark:bg-gray-800 dark:shadow-gray-700/25"
 			>
 			  <span class="inline-block rounded bg-blue-600 p-2 text-white dark:bg-blue-700">
 			    <svg
@@ -20,7 +20,7 @@ templ Index(germanWords []types.GermanWord) {
 			      viewBox="0 0 24 24"
 			      stroke="currentColor"
 			    >
-			      <path d="M12 14l9-5-9-5-9 5 9 5z" />
+			      <path d="M12 14l9-5-9-5-9 5z" />
 			      <path
 				d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"
 			      />
@@ -28,7 +28,7 @@ templ Index(germanWords []types.GermanWord) {
 				stroke-linecap="round"
 				stroke-linejoin="round"
 				stroke-width="2"
-				d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"
+				d="M12 14l9-5-9-5-9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"
 			      />
 			    </svg>
 			  </span>
@@ -39,13 +39,12 @@ templ Index(germanWords []types.GermanWord) {
 			    </h3>
 			  </a>
 
-			  <p class="mt-2 line-clamp-3 text-sm/relaxed text-gray-500 dark:text-gray-400">
+			  <p class="mt-2 line-clamp-3 text-sm/relaxed text-gray-600 dark:text-gray-400">
 				{ germanWord.Definition }
 			  </p>
 
 			  <a href="#" class="group mt-4 inline-flex items-center gap-1 text-sm font-medium text-blue-600">
 			    Find out more
-
 			    <span aria-hidden="true" class="block transition-all group-hover:ms-0.5 rtl:rotate-180">
 			      &rarr;
 			    </span>

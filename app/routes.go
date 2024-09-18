@@ -45,6 +45,7 @@ func InitializeRoutes(router *chi.Mux) {
 		app.Get("/track", kit.Handler(handlers.HandleTrackIndex))
 		app.Get("/quiz", kit.Handler(handlers.HandleQuizIndex))
 		app.Post("/upload", kit.Handler(handlers.HandleUpload))
+		app.Get("/uploadpage", kit.Handler(handlers.HandleUploadIndex))
 	})
 
 	// Authenticated routes

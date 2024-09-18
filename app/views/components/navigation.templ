@@ -7,21 +7,11 @@ templ Navigation() {
 				<a href="/" class="font-semibold uppercase">smartquiz <span class="text-sm">v0.1</span></a>
 			</div>
 			<div class="text-lg text-foreground">
+				<a href="/uploadpage" class="font-semibold uppercase text-blue-500">upload</a>
+			</div>
+			<div class="text-lg text-foreground">
 				<a href="/track" class="font-semibold uppercase text-blue-500">track</a>
 			</div>
-			<form id='form' hx-encoding='multipart/form-data' hx-post='/upload'>
-				<input type='file' name='file'>
-				<button>
-				    Upload
-				</button>
-				<progress id='progress' value='0' max='100'></progress>
-			    </form>
-			    <script>
-				htmx.on('#form', 'htmx:xhr:progress', function(evt) {
-				  htmx.find('#progress').setAttribute('value', evt.detail.loaded/evt.detail.total * 100)
-				});
-			    </script>
-
 			<div class="text-lg text-foreground">
 				<a href="/quiz" class="font-semibold uppercase text-blue-500">quiz</a>
 			</div>
