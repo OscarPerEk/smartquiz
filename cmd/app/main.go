@@ -35,7 +35,7 @@ func main() {
 	// In development link the full Templ proxy url.
 	url := "http://localhost:7331"
 	if kit.IsProduction() {
-		url = fmt.Sprintf("http://localhost%s", listenAddr)
+		url = fmt.Sprintf("http://0.0.0.0%s", listenAddr)
 	}
 
 	fmt.Printf("application running in %s at %s\n", kit.Env(), url)
