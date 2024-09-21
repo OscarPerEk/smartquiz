@@ -1,0 +1,25 @@
+package upload
+
+import (
+	"smartquiz/app/views/layouts"
+)
+
+templ Index() {
+	@layouts.App() {
+		<div class="text-center flex flex-col justify-center items-center mt-5 lg:mt-16">
+		    <div class="bg-white shadow-lg rounded-lg p-8 max-w-md w-full text-center">
+			<h1 class="text-2xl font-bold mb-4">Upload Your Picture</h1>
+			<p class="text-gray-600 mb-6">The AI will scan your picture and extract its content. It will identify glossary and add to your database. Under TRACK you can see uploaded glossary. AI will also add examples and definitions.</p>
+
+			<form id="form" hx-encoding="multipart/form-data" hx-post="/upload" class="space-y-4">
+			    <input type="file" name="file" accept="image/*" class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+			    
+			    <button class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition">Upload</button>
+
+			    <progress id="progress" value="0" max="100" class="w-full h-2 bg-gray-200 rounded"></progress>
+			</form>
+		    </div>
+
+		</div>
+	}
+}
