@@ -26,13 +26,27 @@ func fileToBytes(image_path string) []byte {
 
 const ImagePath = `C:\Users\qxz2fxf\Downloads\2024-09-15 21_31_30-glossary _ Übersetzung Englisch-Deutsch.png`
 
-func TestVision(t *testing.T) {
-	visionRes := ReadPicture(fileToBytes(ImagePath))
-	fmt.Printf("Json succesfully read.\n %v\n%v\n%v", visionRes.Glossary, visionRes.Definition, visionRes.Example)
+// only works in windows...
+// func TestVision(t *testing.T) {
+// 	visionRes := ReadPicture(fileToBytes(ImagePath))
+// 	fmt.Printf("Json succesfully read.\n %v\n%v\n%v", visionRes.Glossary, visionRes.Definition, visionRes.Example)
+// 	germanWord := types.GermanWord{
+// 		DifficultyLevel: "",
+// 		GermanWord:      visionRes.Glossary,
+// 		Definition:      visionRes.Definition,
+// 	}
+// 	err := db.Get().Save(&germanWord).Error
+// 	if err != nil {
+// 		fmt.Println("error when saving glossary to database", err)
+// 		t.Fail()
+// 	}
+// }
+
+func TestDatabase(t *testing.T) {
 	germanWord := types.GermanWord{
 		DifficultyLevel: "",
-		GermanWord:      visionRes.Glossary,
-		Definition:      visionRes.Definition,
+		GermanWord:      "test-word",
+		Definition:      "test-definition",
 	}
 	err := db.Get().Save(&germanWord).Error
 	if err != nil {
