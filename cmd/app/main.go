@@ -36,6 +36,7 @@ func main() {
 	url := "http://localhost:7331"
 	if kit.IsProduction() {
 		url = fmt.Sprintf("http://0.0.0.0%s", listenAddr)
+		// url = fmt.Sprintf("http://localhost%s", listenAddr)
 	}
 
 	fmt.Printf("application running in %s at %s\n", kit.Env(), url)

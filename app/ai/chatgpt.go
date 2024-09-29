@@ -1,6 +1,7 @@
 package ai
 
 import (
+	"bytes"
 	"encoding/base64"
 	"encoding/json"
 	"fmt"
@@ -64,6 +65,10 @@ func getAPIKey() string {
 	return string(apiKeyBytes)
 }
 
+func getEnvAPIKey() string {
+	return os.Getenv("API_KEY")
+}
+
 type Choice struct {
 	Index   int     `json:"index"`
 	Message Message `json:"message"`
@@ -113,35 +118,31 @@ func encodeImageBytes(picture []byte) string {
 	return str
 }
 
-// Ask a question about an image by calling the vision API
 func CallVisionApi(question string, image []byte) VisionResponse {
 	fmt.Println("Calling vision API")
+
 	client := resty.New()
+
+	// Use a multipart form to send the image and text
 	response, err := client.R().
-		SetAuthToken(getAPIKey()).
-		SetHeader("Content-Type", "application/json").
-		SetBody(map[string]interface{}{
-			"model": modelVision,
-			"messages": []map[string]interface{}{
-				{
-					"role": "user",
-					"content": []map[string]interface{}{
-						{"type": "text", "text": question},
-						{"type": "image_url", "image_url": map[string]string{
-							// "url": "data:image/jpeg;base64," + encodeImage(image_path),
-							"url": "data:image/png;base64," + base64.StdEncoding.EncodeToString(image),
-						}},
-					},
-				},
-			},
-			"max_tokens": 1000,
+		SetAuthToken(os.Getenv("API_KEY")).
+		SetFileReader("file", "image.png", bytes.NewReader(image)). // Pass the image as a file
+		SetFormData(map[string]string{
+			"model":  modelVision,
+			"prompt": question, // Use 'prompt' or 'messages' depending on API
 		}).
 		Post(apiEndpointChat)
+
 	if err != nil {
-		log.Fatalf("Failed to send request %v\n %v\n", err, response)
+		log.Fatalf("Failed to send request: %v\n", err)
 	}
+
 	var parsed_response VisionResponse
-	json.Unmarshal(response.Body(), &parsed_response)
+	err = json.Unmarshal(response.Body(), &parsed_response)
+	if err != nil {
+		log.Fatalf("Failed to parse response: %v\n", err)
+	}
+
 	return parsed_response
 }
 
@@ -163,7 +164,7 @@ func StartVision(image []byte) {
 	fmt.Printf("%#v\n", response)
 }
 
-func ReadPicture(image_path []byte) Json {
+func ReadPicture(image []byte) Json {
 	var question string = "Read the text in the image. Extract the word being defined and its definition. If possible also a example of how its used." +
 		"Now i want you to respond in the format of json. Key ist the important word and value its definition and example." +
 		"I will turn your answer into a json file so please adhere to the format so that i can parse the file easily." +
@@ -176,11 +177,9 @@ func ReadPicture(image_path []byte) Json {
 								Definition string
 								Example    string
 							}`
-	var response VisionResponse = CallVisionApi(question, image_path)
+	var response VisionResponse = CallVisionApi(question, image)
 	fmt.Printf("%#v\n", response)
 	res := ReadJsonBytes([]byte(response.Choices[0].Message.Content))
 	fmt.Printf("%#v\n %v\n %v\n %v\n", res, res.Definition, res.Example, res.Glossary)
 	return res
 }
-
-// func main() {

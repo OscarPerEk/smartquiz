@@ -701,6 +701,10 @@ body {
   display: inline-flex;
 }
 
+.contents {
+  display: contents;
+}
+
 .hidden {
   display: none;
 }
@@ -1115,10 +1119,6 @@ body {
 
 .duration-200 {
   transition-duration: 200ms;
-}
-
-.\[rowStart\:rowEnd\] {
-  row-start: rowEnd;
 }
 
 /* fix for Alpine users. */

@@ -8,7 +8,6 @@ go 1.22.4
 require (
 	github.com/a-h/templ v0.2.778
 	github.com/anthdm/superkit v0.0.0-20240701091803-e7f8e0aad3e9
-	github.com/dslipak/pdf v0.0.2
 	github.com/go-chi/chi/v5 v5.0.14
 	github.com/go-resty/resty/v2 v2.15.0
 	github.com/golang-jwt/jwt/v5 v5.2.1

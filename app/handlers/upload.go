@@ -52,6 +52,7 @@ func HandleUpload(kit *kit.Kit) error {
 	}
 	err = db.Get().Save(&germanWord).Error
 	if err != nil {
+		fmt.Println("error when saving glossary to database", err)
 		return err
 	}
 	return kit.Redirect(http.StatusSeeOther, "/track")
