@@ -46,9 +46,9 @@ func HandleUpload(kit *kit.Kit) error {
 	fmt.Println("successfully read file into bytes")
 	visionRes := ai.ReadPicture(fileBytes)
 	germanWord := types.GermanWord{
-		DifficultyLevel: "",
-		GermanWord:      visionRes.Glossary,
-		Definition:      visionRes.Definition,
+		Example:    visionRes.Example,
+		GermanWord: visionRes.Glossary,
+		Definition: visionRes.Definition,
 	}
 	err = db.Get().Save(&germanWord).Error
 	if err != nil {

@@ -19,9 +19,9 @@ func HandleTrackIndex(kit *kit.Kit) error {
 		fmt.Println("Unable to query glossary from database", err)
 		http.Error(kit.Response, "Unable to query glossary from database", http.StatusInternalServerError)
 		germanWords = append(germanWords, types.GermanWord{
-			DifficultyLevel: "a",
-			GermanWord:      "b",
-			Definition:      "c",
+			Example:    "a",
+			GermanWord: "b",
+			Definition: "c",
 		})
 	} else {
 		fmt.Println("words: ", germanWords)

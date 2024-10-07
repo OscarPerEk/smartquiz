@@ -44,9 +44,9 @@ const ImagePath = `C:\Users\qxz2fxf\Downloads\2024-09-15 21_31_30-glossary _ Üb
 
 func TestDatabase(t *testing.T) {
 	germanWord := types.GermanWord{
-		DifficultyLevel: "",
-		GermanWord:      "test-word",
-		Definition:      "test-definition",
+		Example:    "",
+		GermanWord: "test-word",
+		Definition: "test-definition",
 	}
 	err := db.Get().Save(&germanWord).Error
 	if err != nil {
