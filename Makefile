@@ -29,8 +29,8 @@ endif
 # re-create _templ.txt files on change, then send reload event to browser. 
 # Default url: http://localhost:7331
 templ:
-	@templ generate --watch --proxy="http://0.0.0.0$(HTTP_LISTEN_ADDR)" --open-browser=false
-	# @templ generate --watch --proxy="http://localhost$(HTTP_LISTEN_ADDR)" --open-browser=false
+	@templ generate --watch --proxy="http://localhost$(HTTP_LISTEN_ADDR)" --open-browser=false
+	# @templ generate --watch --proxy="http://0.0.0.0$(HTTP_LISTEN_ADDR)" --open-browser=false
 
 # run air to detect any go file changes to re-build and re-run the server.
 server:
@@ -58,6 +58,10 @@ sync_assets:
 # start the application in development
 dev:
 	@make -j5 templ server watch-assets watch-esbuild sync_assets
+
+run:
+	@go run ./cmd/app/main.go
+
 
 # build the application for production. This will compile your app
 # to a single binary with all its assets embedded.

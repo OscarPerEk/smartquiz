@@ -1,6 +1,7 @@
 package db
 
 import (
+	"fmt"
 	"log"
 	"os"
 
@@ -22,6 +23,7 @@ func Get() *gorm.DB {
 }
 
 func init() {
+	fmt.Println("inside init of db")
 	// Create a default *sql.DB exposed by the superkit/db package
 	// based on the given configuration.
 	config := db.Config{
@@ -31,6 +33,7 @@ func init() {
 		User:     os.Getenv("DB_USER"),
 		Host:     os.Getenv("DB_HOST"),
 	}
+	fmt.Printf("config in db.go: %v", config)
 	dbinst, err := db.NewSQL(config)
 	if err != nil {
 		log.Fatal(err)

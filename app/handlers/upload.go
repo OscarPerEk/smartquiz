@@ -23,37 +23,45 @@ func HandleUpload(kit *kit.Kit) error {
 	}
 	fmt.Println("succesfully parsed file")
 
-	// FormFile returns the first file for the given key 'picture'
-	file, _, err := kit.Request.FormFile("file")
-	if err != nil {
-		fmt.Println("error when fromfile", err)
-		http.Error(kit.Response, err.Error(), http.StatusInternalServerError)
-		return err
-	}
-	defer file.Close()
-
-	fmt.Println("succesfully fromfile")
-
-	// Read file contents into a byte slice
-	fileBytes, err := io.ReadAll(file)
-	if err != nil {
-		fmt.Println("error when reading file bytes", err)
-		http.Error(kit.Response, err.Error(), http.StatusInternalServerError)
-		return err
+	files := kit.Request.MultipartForm.File["files"]
+	if len(files) == 0 {
+		fmt.Println("no files found in multipartform")
+		return fmt.Errorf("no files in form")
 	}
 
-	// Now you have the file as bytes in fileBytes
-	fmt.Println("successfully read file into bytes")
-	visionRes := ai.ReadPicture(fileBytes)
-	germanWord := types.GermanWord{
-		Example:    visionRes.Example,
-		GermanWord: visionRes.Glossary,
-		Definition: visionRes.Definition,
-	}
-	err = db.Get().Save(&germanWord).Error
-	if err != nil {
-		fmt.Println("error when saving glossary to database", err)
-		return err
+	for _, fileHeader := range files {
+		// Open the file
+		file, err := fileHeader.Open()
+		if err != nil {
+			fmt.Println("error when opening file", err)
+			http.Error(kit.Response, err.Error(), http.StatusInternalServerError)
+			return err
+		}
+		defer file.Close()
+
+		fmt.Println("succesfully fromfile")
+
+		// Read file contents into a byte slice
+		fileBytes, err := io.ReadAll(file)
+		if err != nil {
+			fmt.Println("error when reading file bytes", err)
+			http.Error(kit.Response, err.Error(), http.StatusInternalServerError)
+			return err
+		}
+
+		// Now you have the file as bytes in fileBytes
+		fmt.Println("successfully read file into bytes")
+		visionRes := ai.ReadPicture(fileBytes)
+		germanWord := types.GermanWord{
+			Example:    visionRes.Example,
+			GermanWord: visionRes.Glossary,
+			Definition: visionRes.Definition,
+		}
+		err = db.Get().Save(&germanWord).Error
+		if err != nil {
+			fmt.Println("error when saving glossary to database", err)
+			return err
+		}
 	}
 	return kit.Redirect(http.StatusSeeOther, "/track")
 }

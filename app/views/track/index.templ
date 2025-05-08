@@ -7,27 +7,28 @@ import (
 
 templ Index(germanWords []types.GermanWord) {
 	@layouts.App() {
-		<div class="text-center flex flex-col justify-center items-center mt-5 lg:mt-16 space-y-6">
-			for _, germanWord := range germanWords {
-			<article
-			  class="w-full sm:w-1 lg:w-1/2 rounded-lg border border-gray-200 bg-gray-100 p-4 shadow-sm transition hover:shadow-lg sm:p-6 dark:border-gray-700 dark:bg-gray-300 dark:shadow-gray-300/25"
-			>
-			  <a href="#">
-			    <h3 class="mt-0.5 text-lg font-medium text-gray-900 dark:text-black">
-			      { germanWord.GermanWord }
-			    </h3>
-			  </a>
-
-			  <p class="mt-2 line-clamp-3 text-sm/relaxed text-gray-600 dark:text-gray-400">
-				{ germanWord.Definition }
-			  </p>
-
-			  <p class="mt-2 line-clamp-3 text-sm/relaxed text-gray-600 dark:text-gray-400">
-				"{ germanWord.Example }"
-			  </p>
-
-			</article>
-				}
+		<div class="flex justify-center mt-10 px-4">
+			<div class="w-full max-w-5xl overflow-x-auto rounded-lg shadow border border-gray-200 bg-white bg-opacity-90 dark:bg-gray-900 dark:bg-opacity-90">
+				<table class="min-w-full text-left text-sm text-gray-700 dark:text-gray-200">
+					<thead class="bg-gray-100 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
+						<tr>
+							<th class="px-6 py-4 font-semibold tracking-wide">📘 Word</th>
+							<th class="px-6 py-4 font-semibold tracking-wide">📖 Definition</th>
+							<th class="px-6 py-4 font-semibold tracking-wide">💬 Example</th>
+						</tr>
+					</thead>
+					<tbody class="divide-y divide-gray-100 dark:divide-gray-800">
+						for _, germanWord := range germanWords {
+							<tr class="hover:bg-gray-50 dark:hover:bg-gray-800 transition">
+								<td class="px-6 py-4 font-medium text-blue-700 dark:text-blue-400">{ germanWord.GermanWord }</td>
+								<td class="px-6 py-4">{ germanWord.Definition }</td>
+								<td class="px-6 py-4 italic text-gray-600 dark:text-gray-400">"{ germanWord.Example }"</td>
+							</tr>
+						}
+					</tbody>
+				</table>
+			</div>
 		</div>
 	}
 }
+

@@ -1,17 +1,13 @@
 package types
 
 import (
-	"time"
-
 	"gorm.io/gorm"
 )
 
 type GermanWord struct {
-	gorm.Model
+	gorm.Model // includes id, created_at, updated_at, deleted_at
 
-	Example    string
-	GermanWord string
-	Definition string
-	created_at time.Time
-	deleted_at time.Time
+	Example    string `gorm:"column:example;unique;not null"`
+	GermanWord string `gorm:"column:german_word;unique;not null"`
+	Definition string `gorm:"column:definition;unique;not null"`
 }

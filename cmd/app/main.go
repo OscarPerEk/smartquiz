@@ -14,6 +14,7 @@ import (
 )
 
 func main() {
+	fmt.Println("lets see if i get this")
 	kit.Setup()
 	router := chi.NewMux()
 
@@ -34,14 +35,21 @@ func main() {
 	listenAddr := os.Getenv("HTTP_LISTEN_ADDR")
 	// In development link the full Templ proxy url.
 	url := "http://localhost:7331"
+	url = "localhost:7331"
+	url = fmt.Sprintf("localhost%v", listenAddr)
 	if kit.IsProduction() {
 		url = fmt.Sprintf("http://0.0.0.0%s", listenAddr)
+		fmt.Println("kit is in production, using: ", url)
 		// url = fmt.Sprintf("http://localhost%s", listenAddr)
 	}
 
 	fmt.Printf("application running in %s at %s\n", kit.Env(), url)
 
-	http.ListenAndServe(listenAddr, router)
+	err := http.ListenAndServe(url, router)
+	if err != nil {
+		log.Fatalf("servering fialed: %v", err)
+	}
+
 }
 
 func staticDev() http.Handler {
@@ -60,7 +68,9 @@ func disableCache(next http.Handler) http.Handler {
 }
 
 func init() {
+	fmt.Println("insidie init of main")
 	if err := godotenv.Load(); err != nil {
 		log.Fatal(err)
 	}
+	fmt.Printf("loaded env variables: %s, %s, %s", os.Getenv("DB_DRIVER"), os.Getenv("DB_NAME"), os.Getenv("DB_PASSWORD"))
 }
