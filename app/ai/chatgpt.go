@@ -24,13 +24,14 @@ const (
 
 type Json struct {
 	// The JSON object that will be read from the file
-	Glossary   string
-	Definition string
-	Example    string
+	Glossary     string
+	Definition   string
+	Example      string
+	Translations string
 }
 
-func ReadJsonBytes(jsonBytes []byte) Json {
-	var res Json
+func ReadJsonBytes(jsonBytes []byte) []Json {
+	var res []Json
 	err := json.Unmarshal(jsonBytes, &res)
 	if err != nil {
 		fmt.Println("error:", err)
@@ -204,22 +205,31 @@ func StartVision(image []byte) {
 	fmt.Printf("%#v\n", response)
 }
 
-func ReadPicture(image []byte) Json {
-	var question string = "Read the text in the image and find the word of interest. The word is either highlighted or stands out. Secondly, if possible extract the context the word is used and use this as inspiration when formulating the example. You will fill out a json with the following information: Glossary: this is the word that stood out the most. Definition: here you write a sentance about the meaning of the word that stood out. Example: here you write like 1-3 senatances with an example where the word is put into a context. Here you could use the same context as in the image but its not needed. Feel free to come up with your own example also so that its crystal clear and a good example of how the word that stood out is often used." +
+func ReadPicture(image []byte) []Json {
+	var question string = "You will be presented with a picture of translations from german to english/swedeish." +
+		"Now I want you to identify each word or phrase in german that is translated." +
+		"Then for each word or phrase give me its definition, example and translation." +
+		"Feel free to list multiple translations and please always write both english and swedish translation of the german word." +
 		"Now i want you to respond in the format of json." +
 		"I will turn your answer into a json file so please adhere to the format so that i can parse the file easily." +
 		"Start with { and end with }. No text before or after the json." +
 		"And dont format with new line or tabs or spaces. Just the json." +
-		` The json will be marshaled into the following go struct:
+		` The json will be marshaled into a slice of the following go struct:
 							type Json struct {
-								Glossary   string
-								Definition string
-								Example    string
-							}`
+								Glossary     string
+								Definition   string
+								Example      string
+								Translation  string
+							}` +
+		"Therefore return a list of Json (i.e. []Json)." +
+		`For example it can look like this: "[{"Glossary": "langsam gehen", "Definition": "somebody moving slowely", "Example": "er ging langsam durch das Raum", "Translation": "slow walking, gå långsamt"}]"`
+
 	var response VisionResponse = CallVisionApi(question, image)
 	// fmt.Printf("%#v\n", response)
 	res := ReadJsonBytes([]byte(response.Choices[0].Message.Content))
 	fmt.Println("\nGerman Word class: ")
-	fmt.Printf("%#v\n %v\n %v\n %v\n", res, res.Definition, res.Example, res.Glossary)
+	for _, r := range res {
+		fmt.Printf("%#v\n %v\n %v\n %v\n", r, r.Definition, r.Example, r.Glossary)
+	}
 	return res
 }
