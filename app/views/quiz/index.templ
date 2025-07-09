@@ -2,13 +2,43 @@ package quiz
 
 import (
 	"smartquiz/app/views/layouts"
+	"smartquiz/app/types"
 )
 
-templ Index() {
+templ Index(germanWord types.GermanWord) {
 	@layouts.App() {
-		<div class="text-center flex flex-col justify-center items-center mt-5 lg:mt-16">
-			<div class="flex flex-col gap-12">
-				<h1 class="inline-block text-transparent bg-clip-text max-w-2xl mx-auto text-5xl lg:text-7xl font-bold uppercase bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">quiz</h1>
+		<div class="text-center flex flex-col justify-center items-center mt-5 lg:mt-16 space-y-6">
+			<h1 class="text-transparent bg-clip-text max-w-2xl mx-auto text-5xl lg:text-7xl font-bold uppercase bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
+				quiz
+			</h1>
+
+			<div class="text-2xl text-gray-800">{germanWord.Definition}</div>
+			<div class="text-xl text-gray-600">{germanWord.Translation}</div>
+
+			<!-- GermanWord hidden initially -->
+			<div id="glossary" class="text-md text-gray-400 hidden">
+				{germanWord.GermanWord}
+			</div>
+
+			<div class="flex gap-4 mt-4">
+				<!-- Show GermanWord button triggers JS to reveal it -->
+				<button
+					type="button"
+					onclick="document.getElementById('glossary').classList.remove('hidden')"
+					class="px-6 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-600 transition"
+				>
+					Show GermanWord
+				</button>
+
+				<!-- Next Word reloads page to get new word -->
+				<form method="GET" action="/quiz">
+					<button
+						type="submit"
+						class="px-6 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition"
+					>
+						Next Word
+					</button>
+				</form>
 			</div>
 		</div>
 	}

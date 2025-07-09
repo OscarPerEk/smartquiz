@@ -24,10 +24,10 @@ const (
 
 type Json struct {
 	// The JSON object that will be read from the file
-	Glossary     string
-	Definition   string
-	Example      string
-	Translations string
+	Glossary    string
+	Definition  string
+	Example     string
+	Translation string
 }
 
 func ReadJsonBytes(jsonBytes []byte) []Json {
@@ -209,10 +209,13 @@ func ReadPicture(image []byte) []Json {
 	var question string = "You will be presented with a picture of translations from german to english/swedeish." +
 		"Now I want you to identify each word or phrase in german that is translated." +
 		"Then for each word or phrase give me its definition, example and translation." +
+		"If the words has different meanings in different contexts, simply list them all." +
+		"My level is already C1-C2, thus please add multiple meanings it it has." +
+		"If the word is reflexive show that in the example. Also here you can give more examples if multiple meanings" +
 		"Feel free to list multiple translations and please always write both english and swedish translation of the german word." +
 		"Now i want you to respond in the format of json." +
 		"I will turn your answer into a json file so please adhere to the format so that i can parse the file easily." +
-		"Start with { and end with }. No text before or after the json." +
+		"Start with [ and end with ]. No text before or after the json." +
 		"And dont format with new line or tabs or spaces. Just the json." +
 		` The json will be marshaled into a slice of the following go struct:
 							type Json struct {
@@ -226,10 +229,9 @@ func ReadPicture(image []byte) []Json {
 
 	var response VisionResponse = CallVisionApi(question, image)
 	// fmt.Printf("%#v\n", response)
-	res := ReadJsonBytes([]byte(response.Choices[0].Message.Content))
-	fmt.Println("\nGerman Word class: ")
-	for _, r := range res {
-		fmt.Printf("%#v\n %v\n %v\n %v\n", r, r.Definition, r.Example, r.Glossary)
+	var res []Json
+	if len(response.Choices) > 0 {
+		res = ReadJsonBytes([]byte(response.Choices[0].Message.Content))
 	}
 	return res
 }

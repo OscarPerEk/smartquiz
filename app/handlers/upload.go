@@ -108,7 +108,7 @@ func HandleUpload(kit *kit.Kit) error {
 					Example:     word.Example,
 					GermanWord:  word.Glossary,
 					Definition:  word.Definition,
-					Translation: word.Translations,
+					Translation: word.Translation,
 				}
 
 				// Send the successfully processed word to the results channel.
